@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="hero-wrap js-fullheight" style="background-image: url('/static/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+        <div class="col-md-12 ftco-animate">
+            <h2 class="subheading">Hello! Welcome to <span style="color:rgb(62, 62, 62) ; text-transform: capitalize; "
+                >BLOG</span><span style="color: rgb(239, 20, 70); text-transform: uppercase; ">BOX</span>
+                
+            </h2>
+            <h1 class="mb-4 mb-md-0" style="text-transform: uppercase; letter-spacing:0.05%">{% if header %}{{header}}{% else %}View Posts{% endif %}</span></h1>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="text">
+                        <p>We strive to globally disseminate interactive information and continue to approach our jobs with passion and commitment.</p>
+                        <div class="mouse">
+                                      <a href="#sec" class="mouse-icon">
+                                          <div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
+                                      </a>
+                                  </div>
+                              </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+     <section id="sec" class="ftco-section bg-light">
+    <div class="container">
+      <div class="row d-flex">
+        {% if articles %}
+        {% for article in articles %}
+        <div class="col-md-4 d-flex ftco-animate">
+            <div class="blog-entry justify-content-end">
+            <a href="{% url 'article' article.id %}" class="block-20" style="background-image: url({{article.photo_main.url}});">
+            </a>
+            <div class="text p-4 float-right d-block">
+                <div class="topper d-flex align-items-center">
+                    <div class="one py-2 pl-3 pr-1 align-self-stretch">
+                        <span class="day">{{ article.post_date|date:"j" }}</span>
+                    </div>
+                    <div class="two pl-0 pr-3 py-2 align-self-stretch">
+                        <span class="yr">{{ article.post_date|date:"Y" }}</span>
+                        <span class="mos">{{ article.post_date|date:"F" }}</span>
+                    </div>
+                </div>
+                <h3 class="heading mb-3"><a href="{% url 'article' article.id %}">{{ article.topic }}</a></h3>
+              <p>{{ article.description|truncatewords:15 }}</p>
+              <p><a href="{% url 'article' article.id %}" class="btn-custom"><span class="ion-ios-arrow-round-forward mr-3"></span>Read more</a></p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-md-12 container text-center" style="color: red;">
+          <p>No Post Available</p>
+        </div>
+        {% endif %}
+      </div>
+
+
+      <div class="container">
+      <div class="row mt-5">
+        <div class="container col text-center ">
+        <div class="col-md-12 c">
+          {% if articles.has_other_pages %}
+            <ul class="pagination">
+              {% if articles.has_previous %}
+              <li class="page-item">
+                <a href="?page={{articles.previous_page_number}}" class="page-link">&laquo;
+
+                </a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a  class="page-link">&laquo;</a>
+              </li>
+              {% endif %}
+            
+              {% for i in articles.paginator.page_range %}
+              {% if articles.number == i %}
+              <li class="page-item active">
+                <a  class="page-link">{{i}}</a>
+              </li>
+              {% else %}
+              <li class="page-item">
+                <a href="?page={{i}}" class="page-link">{{i}}</a>
+              </li>
+              {% endif %}
+             {% endfor %}
+
+              {% if listings.has_next %}
+                <li class="page-item">
+                  <a href="?page={{articles.next_page_number}}" class="page-link">&raquo;
+    
+                  </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                  <a  class="page-link">&raquo;</a>
+                </li>
+                {% endif %}
+               
+            </ul>
+          {% endif %}
+
+         </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

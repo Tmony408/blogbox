@@ -1,0 +1,50 @@
+{% load static %}
+<nav class="navbar px-md-0 navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/bb.png' %}" alt="logo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+      </button>
+
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li 
+          {% if '/' == request.path %}
+          class="nav-item active "
+          {% else %}
+          class="nav-item"
+          {% endif %}><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+          <li {% if 'articles' in request.path %}
+          class="nav-item dropdown active"
+          {% else %}
+          class="nav-item dropdown"
+          {% endif %}>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Articles
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'articles' %}">All</a>
+              <a class="dropdown-item" href="{% url 'international' %}">International</a>
+              <a class="dropdown-item" href="{% url 'local' %}">Local</a>
+              <a class="dropdown-item" href="{% url 'sport' %}">Sport</a>
+              <a class="dropdown-item" href="{% url 'education' %}">Education</a>
+              <a class="dropdown-item" href="{% url 'entertainment' %}">Entertainment</a>
+              
+            </div>
+          </li>
+          <li 
+          {% if 'team' in request.path %}
+          class="nav-item active"
+          {% else %}
+          class="nav-item"
+          {% endif %}><a href="{% url 'team' %}" class="nav-link">Team</a></li>
+          <li {% if 'contact' in request.path %}
+          class="nav-item active"
+          {% else %}
+          class="nav-item"
+          {% endif %}><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<!-- END nav -->
